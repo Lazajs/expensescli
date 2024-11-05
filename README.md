@@ -1,0 +1,11 @@
+- obtener el precio mensual de la mensualidad deseada
+- el input debe ser → nombre de servicio, Xpath.
+- el output de cada servicio debe ser siempre un numero (precio de la mensualidad)
+- Debe ofrecer opciones (agregar, quitar, editar xpath o nombre)
+- En caso de error, informar . ⇒ mostrar screenshot tal vez, en cuyo caso la pagina haya cambiado
+- crear una opcion de “visualizar tabla”, donde se muestran los gastos totales y cada uno organizado.
+
+- fancy console error handling
+- fancy console table visualization
+- fancy console input handling
+- fancy console output handling
