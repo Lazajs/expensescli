@@ -1,5 +1,5 @@
 import { Console } from '@/modules/console'
-import { ServicesHandler } from '@/modules/services'
+import { Data } from '@/modules/services'
 
 export const PRIMARY_ACTIONS = {
   SHOW_SERVICES: 'Show services',
@@ -9,6 +9,7 @@ export const PRIMARY_ACTIONS = {
   EXIT: 'Exit'
 } as const
 ;(async () => {
+  Data.checkFile()
   const cli = new Console()
   // Principal menu
   const ACTION_RESULT = await cli.choice<typeof PRIMARY_ACTIONS>(
@@ -19,7 +20,7 @@ export const PRIMARY_ACTIONS = {
   switch (ACTION_RESULT) {
     case 'SHOW_SERVICES':
       console.log('Showing services...')
-      ServicesHandler.showAll()
+      Data.checkFile()
       break
     case 'CREATE_SERVICE':
       console.log('Creating service...')
