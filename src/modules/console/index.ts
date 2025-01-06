@@ -1,13 +1,19 @@
 import readline from 'node:readline'
 import inquirer from 'inquirer'
-import { InvalidOptionError } from '@/modules/errors/index'
+import { InvalidOptionError } from '@/errors/index'
 
 export class Console {
   #rl: readline.Interface
   #inq: typeof inquirer
 
   constructor() {
-    this.#rl = readline.createInterface({
+    this.#rl = this.init()
+
+    this.#inq = inquirer
+  }
+
+  init(): readline.Interface {
+    return (this.#rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       prompt: '>',
@@ -17,15 +23,20 @@ export class Console {
         // Show all completions if none found, else show filtered results
         return [hits.length ? hits : completions, line]
       }
-    })
-
-    this.#inq = inquirer
+    }))
   }
 
-  ask(question: string) {
-    return new Promise(resolve => {
-      this.#rl.question(question, resolve)
-      this.close()
+  ask(question: string): Promise<string> {
+    return new Promise(res => {
+      let fullAnswer = ''
+
+      this.init()
+      this.#rl.question(question, answer => {
+        fullAnswer = answer
+        this.close()
+      })
+
+      if (fullAnswer.length) res(fullAnswer)
     })
   }
 

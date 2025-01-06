@@ -1,17 +1,13 @@
 import { Console } from '@/modules/console'
-import { Data } from '@/modules/services'
+import { Data } from '@/modules/file'
+import { CreateService, ICreateService } from '@/validators'
+import { PRIMARY_ACTIONS } from './constants'
 
-export const PRIMARY_ACTIONS = {
-  SHOW_SERVICES: 'Show services',
-  CREATE_SERVICE: 'Create service',
-  SHOW_EXPENSES: 'Show expenses table',
-  HEALTH_CHECK: 'This is working!', // todo => remove
-  EXIT: 'Exit'
-} as const
-;(async () => {
+async function main() {
+  // Check the correctness of the data file
   Data.checkFile()
+
   const cli = new Console()
-  // Principal menu
   const ACTION_RESULT = await cli.choice<typeof PRIMARY_ACTIONS>(
     'What should we do?',
     PRIMARY_ACTIONS
@@ -20,10 +16,22 @@ export const PRIMARY_ACTIONS = {
   switch (ACTION_RESULT) {
     case 'SHOW_SERVICES':
       console.log('Showing services...')
-      Data.checkFile()
       break
     case 'CREATE_SERVICE':
-      console.log('Creating service...')
+      const name = await cli.ask('Name of your service: ')
+      const url = await cli.ask('URL of the pricing page: ')
+      const xpath = await cli.ask('XPath of the pricing: ')
+
+      const newService: ICreateService = {
+        name,
+        url,
+        xpath
+      }
+
+      const { data, error } = CreateService.safeParse(newService)
+
+      console.log(data, error)
+
       break
     case 'SHOW_EXPENSES':
       console.log('Showing expenses...')
@@ -37,4 +45,7 @@ export const PRIMARY_ACTIONS = {
     default:
       console.log('Invalid action.\n')
   }
-})()
+}
+
+// yea :D
+main()

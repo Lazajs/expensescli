@@ -2,7 +2,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
 import { type IService } from '@/types'
-import { first } from 'rxjs'
 
 export class Data {
   // Deals with the actual file for services data and state

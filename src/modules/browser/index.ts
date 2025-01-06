@@ -1,20 +1,12 @@
 import playwright from 'playwright'
 import { type IEngine } from '@/types'
 
-interface MonthlyService {
-  path: string // element xpath
-  name: string // service name
-}
-
-// the class might receive a new object of type MonthlyService
-export function createService({ name, path }: MonthlyService): MonthlyService {
-  return { name, path }
-}
+type BrowserOptions = 'chromium'
 
 export class Chromium<IEngine> {
-  constructor(private service: MonthlyService) {}
+  #browser: typeof playwright.chromium
 
-  public getServiceName() {
-    return this.service.name
+  constructor(private serviceName: BrowserOptions) {
+    this.#browser = playwright[serviceName]
   }
 }

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc -w",
     "build": "tsc",
-    "start": "node -r module-alias/register dist/index.js",
+    "start": "tsc && node -r module-alias/register dist/index.js",
     "pwsetup": "playwright install"
   },
   "_moduleAliases": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "inquirer": "^12.0.1",
     "module-alias": "^2.2.3",
-    "playwright": "^1.48.2"
+    "playwright": "^1.48.2",
+    "zod": "^3.24.1"
   }
 }
