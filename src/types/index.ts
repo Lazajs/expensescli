@@ -4,4 +4,11 @@ export interface IEngine {
   close(): Promise<void>
 }
 
+export interface IService {
+  id: string
+  name: string
+  url: string
+  xpath: string
+}
+
 export type ValueOf<T> = T[keyof T]

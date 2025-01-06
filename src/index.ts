@@ -1,5 +1,5 @@
-import { Chromium, createService } from './lib/use-browser'
-import { Console } from './lib/use-console'
+import { Console } from '@/modules/console'
+import { ServicesHandler } from '@/modules/services'
 
 export const PRIMARY_ACTIONS = {
   SHOW_SERVICES: 'Show services',
@@ -10,14 +10,7 @@ export const PRIMARY_ACTIONS = {
 } as const
 ;(async () => {
   const cli = new Console()
-
-  // const createdService = createService({ name: "Youtube", path: "xpath" });
-  // const browser = new Chromium(createdService);
-  // await cli.ask("What is your name? ").then((name) => {
-  //   console.log(`Hello, ${name}!`);
-  //   cli.close();
-  // });
-
+  // Principal menu
   const ACTION_RESULT = await cli.choice<typeof PRIMARY_ACTIONS>(
     'What should we do?',
     PRIMARY_ACTIONS
@@ -26,6 +19,7 @@ export const PRIMARY_ACTIONS = {
   switch (ACTION_RESULT) {
     case 'SHOW_SERVICES':
       console.log('Showing services...')
+      ServicesHandler.showAll()
       break
     case 'CREATE_SERVICE':
       console.log('Creating service...')
@@ -40,6 +34,6 @@ export const PRIMARY_ACTIONS = {
       console.log('Exiting...')
       break
     default:
-      console.log('Invalid action')
+      console.log('Invalid action.\n')
   }
 })()

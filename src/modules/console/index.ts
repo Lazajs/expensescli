@@ -1,7 +1,6 @@
 import readline from 'node:readline'
 import inquirer from 'inquirer'
-import { type ValueOf } from '../types'
-import { InvalidOptionError } from '../modules/errors/index'
+import { InvalidOptionError } from '@/modules/errors/index'
 
 export class Console {
   #rl: readline.Interface
@@ -26,6 +25,7 @@ export class Console {
   ask(question: string) {
     return new Promise(resolve => {
       this.#rl.question(question, resolve)
+      this.close()
     })
   }
 
