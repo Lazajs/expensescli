@@ -6,7 +6,7 @@ import { type IService } from '@/types'
 export class Data {
   // Deals with the actual file for services data and state
   // should be subscribed to the tsv file
-  static dataDir = path.resolve(path.join(__dirname, '../../data'))
+  static dataDir = path.resolve(path.join(__dirname, '../../../data'))
   static dataFile = this.dataDir + '/data.tsv' // using a tsv file to prevent issues with xpath
 
   static getWriter({ flag }: { flag: string }): fs.WriteStream {

@@ -2,6 +2,7 @@ import { Console } from '@/modules/console'
 import { Data } from '@/modules/file'
 import { CreateService, ICreateService } from '@/validators'
 import { PRIMARY_ACTIONS } from './constants'
+import { InvalidInputError } from '@/errors'
 
 async function main() {
   // Check the correctness of the data file
@@ -28,9 +29,15 @@ async function main() {
         xpath
       }
 
-      const { data, error } = CreateService.safeParse(newService)
+      const { data: parsedNewService, error } =
+        CreateService.safeParse(newService)
 
-      console.log(data, error)
+      if (error) {
+        const fields = error.errors.map(iss => iss.path[0])
+        throw new InvalidInputError(`Invalid input at ${fields.join(', ')}.`)
+      }
+
+      Data.addLine(parsedNewService)
 
       break
     case 'SHOW_EXPENSES':
